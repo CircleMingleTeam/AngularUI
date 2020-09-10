@@ -1,0 +1,109 @@
+@import './../../../styles/custom-styles.scss';
+
+.welcome-container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient($circle-primary, $circle-primary-darker);
+    overflow: hidden;
+    position: relative;
+}
+
+.circle-shape {
+    width: 700px;
+    height: 700px;       
+    border-radius: 50%;
+    background: linear-gradient(to bottom left, $circle-accent-dark, $circle-accent);
+    position: absolute;
+    top: 0;
+    left: 40rem;
+    transform: translate(50px, -150px);
+}
+
+.form-container, .credential-form {
+    width: 30rem;
+}
+
+.divider-line {
+    width: 150px;
+    height: 5px;
+    background-color: #343a40;
+    margin: auto;
+}
+
+/*Bubbles*/
+.bubbles img {
+    width: 50px;
+    animation: bubble 5s linear infinite;
+}
+.bubbles img:nth-child(1) {
+    width: 25px;
+    animation-delay: 2s;
+}
+.bubbles img:nth-child(2) {
+    width: 60px;
+    animation-delay: 1s;
+}
+.bubbles img:nth-child(3) {
+    width: 30px;
+    animation-delay: 3s;
+}
+.bubbles img:nth-child(4) {
+    width: 45px;
+    animation-delay: 4.5s;
+}
+.bubbles img:nth-child(5) {
+    animation-delay: 6s;
+}
+.bubbles img:nth-child(6) {
+    width: 32px;
+    animation-delay: 7s;
+}
+.bubbles img:nth-child(7) {
+    width: 65px;
+    animation-delay: 2s;
+}
+
+
+.bubbles {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: -70px;
+}
+
+@keyframes bubble {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+/*end of Bubbles*/
+
+/* footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+}
+.footer-row {
+    border-top: 2px solid $circle-primary-light;
+}
+.footer-option {
+    color: $circle-primary-light;
+}
+.footer-option:hover {
+    color: $circle-accent-light;
+}
+

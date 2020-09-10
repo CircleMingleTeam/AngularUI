@@ -1,0 +1,26 @@
+$theme-colors: (
+    "primary": #440bff,
+    "secondary": #ffca28,
+    "tertiary": #ff0050
+);
+
+$input-btn-focus-width: 0px;
+
+
+
+
+@import './../../node_modules/bootstrap/scss/bootstrap';
+
+
+$circle-primary-light: #c7b6ff;
+$circle-primary: #440bff;
+$circle-primary-dark: #1f03ff;
+$circle-primary-darker: #0f0080;
+
+$circle-accent-light: #ffefbf;
+$circle-accent: #ffca28;
+$circle-accent-dark: #ffab0f;
+
+$circle-warn-light: #ff80a8;
+$circle-warn: #ff0050;
+$circle-warn-dark: #ff0027;

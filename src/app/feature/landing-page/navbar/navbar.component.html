@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg welcome-nav fixed-top">
+    <a href="" class="nabar-brand">
+        <h1 class="text-secondary font-weight-bolder">CIRCLE</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item" *ngIf="!isSignupMode && isLoginMode">
+                <a class="nav-link">
+                    <button class="btn btn-outline-dark font-weight-bold"
+                     type="button"
+                     (click)="OnChangeToSignup()">SIGN UP</button>
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="!isLoginMode && isSignupMode">
+                <a class="nav-link">
+                    <button class="btn btn-outline-dark font-weight-bold px-3"
+                    type="button"
+                    (click)="onChangeToLogin()">LOG IN</button>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,85 @@
+<section class="welcome-container">
+    <div class="circle-shape"></div>
+    <welcome-navbar [isSignupMode]=signupMode [isLoginMode]=loginMode (changeToSignup)="onSignUp()"
+        (changeToLogin)="onLogIn()"></welcome-navbar>
+    <div class="container mt-md-5">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <div *ngIf="signupMode then credentialForm"></div>
+                <div *ngIf="loginMode then credentialForm"></div>
+                <div class="form-container" *ngIf="!signupMode && !loginMode ">
+                    <div class="m-4">
+                        <button class="btn btn-block btn-secondary
+                                       p-3 font-weight-bold" (click)="onSignUp()">Get Started</button>
+                    </div>
+                    <div class="m-4">
+                        <button class="btn btn-block btn-light
+                                       p-3 font-weight-bold" (click)="onLogIn()">Log In</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="ml-5 mt-3 p-3 text-center">
+                    <h2 class="display-2 font-weight-bold text-dark">CIRCLE</h2>
+                    <div class="mb-4 divider-line"></div>
+                    <h1 class="text-dark display-4">Get Engaged</h1>
+                    <h1 class="text-dark display-4">So Structurized</h1>
+                    <h1 class="text-dark display-4">So Convinent</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row footer-row">
+                <div class="col">
+                    <ul class="list-inline">
+                        <li class="list-inline-item mr-5 mt-2">
+                            <p class="footer-option">&copy; Copyright 2020</p>
+                        </li>
+                        <li class="list-inline-item mx-4 mt-2">
+                            <a href="" class="footer-option">About</a>
+                        </li>
+                        <li class="list-inline-item mx-4 mt-2">
+                            <a href="" class="footer-option">Terms</a>
+                        </li>
+                        <li class="list-inline-item mx-4 mt-2">
+                            <a href="" class="footer-option">Help</a>
+                        </li>
+                        <li class="list-inline-item mx-4 mt-2">
+                            <a href="" class="footer-option">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="bubbles">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+        <img src="./../../../assets/yellowBubble.png">
+    </div>
+</section>
+
+<ng-template #credentialForm>
+    <form class="credential-form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+        <div class="form-group">
+            <label for="EmailId" class="text-white font-weight-bold">Email</label>
+            <input type="email" id="EmailId" class="form-control" placeholder="Email Address" ngModel name="email" required
+                email />
+        </div>
+        <div class="form-group">
+            <label for="Password" class="text-white font-weight-bold">Password</label>
+            <input type="password" id="Password" class="form-control" placeholder="Password" ngModel name="password" required
+                minlength="6" />
+        </div>
+        <button type="submit" class="btn btn-block btn-secondary font-weight-bold">{{credentialFormMode}}</button>
+        <a href="" *ngIf="!signupMode && loginMode">
+            <p class="lead mt-2 text-light">Forget Password?</p>
+        </a>
+    </form>
+</ng-template>

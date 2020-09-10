@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Circle';
+  color1 = "primary";
+  color2 = "accent";
+  color3 = "warn"
+
 }
