@@ -21,13 +21,13 @@ export function AuthReducer(state: State = initialState, action: fromAuthAction.
                 ...state,
                 authError: null,
                 loading: true
-            }
+            };
         case fromAuthAction.LOGIN_START:
             return {
                 ...state,
                 authError: null,
                 loading: true
-            }
+            };
         case fromAuthAction.AUTHENTICATE_SUCCESS:
             const user = new User(action.payload.email, action.payload.userId, action.payload.token, action.payload.expirationDate)
             return {
@@ -35,7 +35,16 @@ export function AuthReducer(state: State = initialState, action: fromAuthAction.
                 user: user,
                 authError: null,
                 loading: false
-            } 
+            };
+        case fromAuthAction.AUTHENTICATE_FAIL:
+            return {
+                ...state,
+                authError: action.payload,
+                loading: false
+            };
+        default: {
+            return initialState;
+        }
     }
 
 }

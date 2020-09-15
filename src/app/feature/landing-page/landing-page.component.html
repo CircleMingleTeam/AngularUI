@@ -5,6 +5,12 @@
     <div class="container mt-md-5">
         <div class="row align-items-center">
             <div class="col-md-7">
+                <div *ngIf="error" class="alert alert-tertiary alert-dismissible fade show" role="alert">
+                    <strong>{{error}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div *ngIf="signupMode then credentialForm"></div>
                 <div *ngIf="loginMode then credentialForm"></div>
                 <div class="form-container" *ngIf="!signupMode && !loginMode ">
@@ -65,21 +71,48 @@
     </div>
 </section>
 
+<!-- credential form -->
 <ng-template #credentialForm>
     <form class="credential-form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
         <div class="form-group">
             <label for="EmailId" class="text-white font-weight-bold">Email</label>
-            <input type="email" id="EmailId" class="form-control" placeholder="Email Address" ngModel name="email" required
-                email />
+            <input type="email" id="EmailId" class="form-control" placeholder="Email Address" ngModel name="email"
+                required email />
         </div>
         <div class="form-group">
             <label for="Password" class="text-white font-weight-bold">Password</label>
-            <input type="password" id="Password" class="form-control" placeholder="Password" ngModel name="password" required
-                minlength="6" />
+            <input type="password" id="Password" class="form-control" placeholder="Password" ngModel name="password"
+                required minlength="6" />
         </div>
-        <button type="submit" class="btn btn-block btn-secondary font-weight-bold">{{credentialFormMode}}</button>
-        <a href="" *ngIf="!signupMode && loginMode">
-            <p class="lead mt-2 text-light">Forget Password?</p>
-        </a>
+        <button type="submit" class="btn btn-block btn-secondary font-weight-bold" data-toggle="alert"
+            data-target="#alertModal">
+            {{credentialFormMode}}</button>
     </form>
+    <a href="" *ngIf="!signupMode && loginMode">
+        <p class="lead mt-2 text-light">Forget Password?</p>
+    </a>
 </ng-template>
+<!-- End of credential form -->
+
+<!-- data-toggle="alert" data-target="#alertModal" -->
+<!-- Alert model -->
+<!-- <div *ngIf="error" class="alert fade" id="alertModal" tabindex="1" role="dialog" aria-labelledby="alertModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-tertiary" id="alertModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-tertiary">{{error}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- end of alert model -->

@@ -1,10 +1,11 @@
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromAuthAction from './auth.actions';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/core/user.model';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 
 export interface AuthResponse {
@@ -28,6 +29,26 @@ const HandleAuthentication = (email: string, userId: string, token: string, expi
     })
 };
 
+const HandleError = (errorRes) => {
+    console.log("errorRes: ",errorRes)
+    let errorMessage = "An unknnown error occured!"
+    if(!errorRes.error || !errorRes.error.error) {
+        return of(new fromAuthAction.AuthenticationFail(errorMessage));
+    }
+    switch (errorRes.error.error.message) {
+        case 'EMAIL_EXISTS':
+            errorMessage = "This email already exists";
+            break;
+        case 'EMAIL_NOT_FOUND':
+            errorMessage = "Invalid email address";
+            break;
+        case 'INVALID_PASSWORD':
+            errorMessage = "Password is incorrect";
+            break;
+    }
+    return of(new fromAuthAction.AuthenticationFail(errorMessage));
+}
+
 @Injectable()
 export class AuthEffects {
 
@@ -46,8 +67,30 @@ export class AuthEffects {
         }),
         map(resData => {
             return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+        }),
+        catchError(errorRes => {
+            return HandleError(errorRes);
         })
     );
+
+    @Effect()
+    authLogin = this.action$.pipe(
+        ofType(fromAuthAction.LOGIN_START),
+        switchMap((authData: fromAuthAction.LoginStart) => {
+            return this.http.post<AuthResponse>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAruh-ikSbTyhSWKiDSPCRAvB8Z7ZMsb8s",
+            {
+                email: authData.payload.email,
+                password: authData.payload.password,
+                returnSecureToken: true
+            })
+        }),
+        map(resData => {
+            return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+        }),
+        catchError(errorRes => {
+            return HandleError(errorRes);
+        })
+    )
 
     @Effect({dispatch: false})
     authRedirect = this.action$.pipe(

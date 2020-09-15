@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromAppReducer from './../../core/app-store/appReducer';
 import * as fromAuthAction from './store/auth.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,11 +13,20 @@ import * as fromAuthAction from './store/auth.actions';
 export class LandingPageComponent implements OnInit {
   signupMode: boolean = false;
   loginMode: boolean = false;
-  credentialFormMode: string = '';
+  credentialFormMode: string = null;
+  error: string = null;
+  storeSubs: Subscription;
 
   constructor(private store: Store<fromAppReducer.AppState>) { }
 
   ngOnInit(): void {
+  this.storeSubs = this.store.select('auth').subscribe(authState => {
+      console.log("authState", authState)
+      this.error = authState.authError;
+      if(this.error) {
+        console.log("error message ", this.error)
+      }
+    })
   }
 
   onLogIn() {
@@ -41,6 +51,9 @@ export class LandingPageComponent implements OnInit {
     if(this.signupMode && !this.loginMode) {
       this.store.dispatch(new fromAuthAction.SignupStart({email: email, password: password}));
       authForm.reset();
+    }
+    if(!this.signupMode && this.loginMode) {
+      this.store.dispatch(new fromAuthAction.LoginStart({email: email, password: password}));
     }
   }
 

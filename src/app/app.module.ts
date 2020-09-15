@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import  { HttpClientModule }  from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import * as fromAppReducer from './core/app-store/appReducer';
 import { AuthEffects } from './feature/landing-page/store/auth.effects';
 
 @NgModule({
@@ -24,7 +25,7 @@ import { AuthEffects } from './feature/landing-page/store/auth.effects';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(fromAppReducer.AppReducer),
     EffectsModule.forRoot([AuthEffects])
   ],
   providers: [],
