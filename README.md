@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Circle
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
@@ -29,3 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 =======
 # circle10
 >>>>>>> 96d4dca0b0d8e41c2e994bde98221f701eeae631
+=======
+# AngularUI
+Circle Mingle front-end master repository 
+>>>>>>> circleorg/master
