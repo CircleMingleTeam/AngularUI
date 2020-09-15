@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/core/user.model';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 
 export interface AuthResponse {
@@ -52,7 +53,7 @@ const HandleError = (errorRes) => {
 @Injectable()
 export class AuthEffects {
 
-    constructor(private action$: Actions, private http: HttpClient, private router: Router) {}
+    constructor(private action$: Actions, private http: HttpClient, private router: Router, private authService: AuthService) {}
 
     @Effect()
     authSignup = this.action$.pipe(
@@ -63,13 +64,17 @@ export class AuthEffects {
                 email: authData.payload.email,
                 password: authData.payload.password,
                 returnSecureToken: true
-            })
-        }),
-        map(resData => {
-            return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
-        }),
-        catchError(errorRes => {
-            return HandleError(errorRes);
+            }).pipe(
+                tap(resData => {
+                    this.authService.SetLogoutTimer(+resData.expiresIn * 1000)
+                }),
+                map(resData => {
+                    return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+                }),
+                catchError(errorRes => {
+                    return HandleError(errorRes);
+                })
+            )
         })
     );
 
@@ -82,15 +87,19 @@ export class AuthEffects {
                 email: authData.payload.email,
                 password: authData.payload.password,
                 returnSecureToken: true
-            })
-        }),
-        map(resData => {
-            return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
-        }),
-        catchError(errorRes => {
-            return HandleError(errorRes);
+            }).pipe(
+                tap(resData => {
+                    this.authService.SetLogoutTimer(+resData.expiresIn * 1000)
+                }),
+                map(resData => {
+                    return HandleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+                }),
+                catchError(errorRes => {
+                    return HandleError(errorRes);
+                })
+            )
         })
-    )
+    );
 
     @Effect({dispatch: false})
     authRedirect = this.action$.pipe(
@@ -99,4 +108,14 @@ export class AuthEffects {
             this.router.navigate(['/home'])
         })
     );
+
+    @Effect({dispatch: false})
+    Logout = this.action$.pipe(
+        ofType(fromAuthAction.LOGOUT),
+        tap(() => {
+            this.authService.ClearLogoutTimeout();
+            localStorage.removeItem('userData');
+            this.router.navigate(['/welcome']);
+        })
+    )
 }

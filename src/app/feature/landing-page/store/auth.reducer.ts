@@ -42,6 +42,11 @@ export function AuthReducer(state: State = initialState, action: fromAuthAction.
                 authError: action.payload,
                 loading: false
             };
+        case fromAuthAction.LOGOUT:
+            return {
+                ...state,
+                user: null
+            }
         default: {
             return initialState;
         }
